@@ -1,0 +1,7 @@
+name: chat_status_lights
+title: Chat Status Lights
+description: Colored status dots next to sidebar chat titles - blue pulse while the agent runs, red when a chat ended with an error, yellow when an approval waits for you (Human Approval Gate), green for finished chats you have not opened.
+version: 0.1.0
+settings_sections: []
+per_project_config: false
+per_agent_config: false

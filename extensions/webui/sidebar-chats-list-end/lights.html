@@ -1,0 +1,48 @@
+<html>
+<head>
+  <script type="module">
+    import { store } from "/plugins/chat_status_lights/webui/lights-store.js";
+  </script>
+</head>
+<body>
+  <div x-data>
+    <template x-if="$store.chatStatusLights">
+      <div
+        class="csl-anchor"
+        x-create="$store.chatStatusLights.mount()"
+        x-destroy="$store.chatStatusLights.cleanup()"
+      ></div>
+    </template>
+  </div>
+
+  <style>
+    .csl-anchor { display: none; }
+
+    .csl-dot {
+      display: inline-block;
+      flex-shrink: 0;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      margin-right: 6px;
+      pointer-events: none;
+    }
+
+    .csl-blue { background-color: #4361ee; box-shadow: 0 0 3px rgba(67, 97, 238, 0.6); }
+    .csl-red { background-color: #e5484d; box-shadow: 0 0 3px rgba(229, 72, 77, 0.6); }
+    .csl-yellow { background-color: #f0b429; box-shadow: 0 0 3px rgba(240, 180, 41, 0.6); }
+    .csl-green { background-color: #2a9d8f; box-shadow: 0 0 3px rgba(42, 157, 143, 0.5); }
+
+    .csl-pulse { animation: csl-pulse 1.8s ease-in-out infinite; }
+    @keyframes csl-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.75); }
+    }
+
+    .light-mode .csl-blue { background-color: #2540b3; }
+    .light-mode .csl-red { background-color: #c62a2f; }
+    .light-mode .csl-yellow { background-color: #b07d0a; }
+    .light-mode .csl-green { background-color: #1a6f65; }
+  </style>
+</body>
+</html>
