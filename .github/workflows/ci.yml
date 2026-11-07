@@ -1,0 +1,29 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Byte-compile Python
+        run: python -m compileall -q -f .
+      - name: Syntax-check JavaScript (ES modules)
+        run: |
+          set -e
+          for f in $(git ls-files '*.js'); do
+            echo "node --check $f"
+            cp "$f" "$RUNNER_TEMP/check.mjs"
+            node --check "$RUNNER_TEMP/check.mjs"
+          done
+      - name: Validate plugin.yaml
+        run: |
+          pip install -q pyyaml
+          python -c "import yaml; yaml.safe_load(open('plugin.yaml'))"
